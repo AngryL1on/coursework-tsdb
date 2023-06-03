@@ -1,0 +1,79 @@
+
+/*Styling the main window*/
+
+.root{
+    -fx-background-color: #0f3057;
+    -fx-font-size:16;
+}
+
+.borderPane{
+    -fx-background-color: #0f3057;
+}
+
+.menuBar{
+    -fx-font-size:14;
+}
+
+.tab{
+    -fx-pref-width: 150;
+    -fx-pref-height: 50;
+    -fx-background-color: #00587a;
+    -fx-font-size:16;
+    -fx-border-width:2;
+    -fx-focus-color: transparent;
+}
+
+.tab:selected {
+    -fx-border-color: white;
+}
+
+.bottomHBOX{
+    -fx-background-color: #00587a;
+    -fx-border-color: #00587a;
+}
+
+.side-buttons{
+    -fx-background-color: #0f3057;
+    -fx-border-color: #00587a;
+    -fx-text-fill: #e7e7de;
+    -fx-font-weight:bold;
+}
+
+.side-buttons:hover {
+    -fx-background-color:#929FB9;
+    -fx-text-fill: #FFFFFF;
+}
+
+
+.setup-button {
+    -fx-background-color:gray;
+    -fx-text-fill: #e7e7de;
+    -fx-font-weight:bold;
+}
+
+.setup-button:hover {
+    -fx-background-color: #e7e7de;
+    -fx-text-fill: #FFFFFF;
+}
+
+
+/*Styling the add book window*/
+
+.addBookButtons{
+    -fx-background-color: #929FB9;
+    -fx-text-fill: white;
+    -fx-font-size:16;
+    -fx-border-weight: 5;
+    -fx-border-color: white;
+}
+
+
+.addBookButtons:hover {
+    -fx-background-color: #929FCC;
+    -fx-text-fill: white;
+}
+
+
+.data0.chart-pie { -fx-pie-color: teal; }
+.data1.chart-pie { -fx-pie-color: cyan; }
+#e7e7de
