@@ -170,7 +170,7 @@ public class ViewMembersController implements Initializable {
     private void loadData() {
         list.clear();
         DatabaseHandler handler = DatabaseHandler.getInstance();
-        String qu = "SELECT * FROM addMember";
+        String qu = "SELECT * FROM \"addMember\"";
         ResultSet rs = handler.execQuery(qu);
         try {
             while (rs.next()) {

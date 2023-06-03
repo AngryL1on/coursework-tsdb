@@ -89,7 +89,7 @@ public class IssuedBooksController implements Initializable {
 
     private void loadData() {
         databaseHandler= DatabaseHandler.getInstance();
-        String qu = "SELECT * FROM issuedBooks";
+        String qu = "SELECT * FROM \"issuedBooks\"";
         ResultSet rs = databaseHandler.execQuery(qu);
         try {
             while (rs.next()) {

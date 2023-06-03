@@ -111,7 +111,7 @@ public class AddMemberController implements Initializable {
         }
 
 
-        String qu = "INSERT INTO addMember VALUES (" +
+        String qu = "INSERT INTO \"addMember\" VALUES (" +
                 "'" + mID + "'," +
                 "'" + mName + "'," +
                 "'" + mEmail + "'," +

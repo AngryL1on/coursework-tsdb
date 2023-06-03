@@ -126,8 +126,8 @@ public class DatabaseHandler {
     public ObservableList<PieChart.Data> getBookGraphicStatistics() {
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         try {
-            String query1 = "SELECT COUNT(*) FROM addBook";
-            String query2 = "SELECT COUNT(*) FROM issuedBooks";
+            String query1 = "SELECT COUNT(*) FROM \"addBook\"";
+            String query2 = "SELECT COUNT(*) FROM \"issuedBooks\"";
 
             ResultSet rs = execQuery(query1);
             if (rs.next()) {
@@ -151,8 +151,8 @@ public class DatabaseHandler {
     public ObservableList<PieChart.Data> getMemberGraphicStatistics() {
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         try {
-            String query1 = "SELECT COUNT(*) FROM addMember";
-            String query2 = "SELECT COUNT(DISTINCT memberID) FROM issuedBooks";
+            String query1 = "SELECT COUNT(*) FROM \"addMember\"";
+            String query2 = "SELECT COUNT(DISTINCT memberID) FROM \"issuedBooks\"";
 
             ResultSet rs = execQuery(query1);
             if (rs.next()) {
@@ -176,7 +176,7 @@ public class DatabaseHandler {
     // Deleting members
     public boolean deleteMember(ViewMembersController.Member member) {
         try {
-            String deleteStatement = "Delete from addMember where memberID = ?";
+            String deleteStatement = "Delete from \"addMember\" where memberID = ?";
             PreparedStatement stmt = conn.prepareStatement(deleteStatement);
             stmt.setString(1, member.getMemberID());
             int res = stmt.executeUpdate();

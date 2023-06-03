@@ -142,7 +142,7 @@ public class MainController implements Initializable  {
                     String query = "SELECT * FROM addBook WHERE id = '" + mBookID + "'";
                     ResultSet r1 = databaseHandler.execQuery(query);
 
-                    String qu1 = "SELECT * FROM addMember WHERE memberID = '" + mMemberID + "'";
+                    String qu1 = "SELECT * FROM \"addMember\" WHERE memberID = '" + mMemberID + "'";
                     ResultSet r2 = databaseHandler.execQuery(qu1);
 
                     while (r1.next() && r2.next()) {
@@ -311,7 +311,7 @@ public class MainController implements Initializable  {
 
 
         String id = memberIdInput.getText();
-        String query = "SELECT * FROM addMember WHERE memberID='" + id + "'";
+        String query = "SELECT * FROM \"addMember\" WHERE memberID='" + id + "'";
         ResultSet rs = databaseHandler.execQuery(query);
         Boolean flag = false;
         try {
