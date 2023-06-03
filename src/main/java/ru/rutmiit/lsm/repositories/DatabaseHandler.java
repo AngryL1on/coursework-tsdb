@@ -57,14 +57,14 @@ public class DatabaseHandler {
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists.");
             } else {
-                stmt.execute("CREATE TABLE " + TABLE_NAME + "(" // Добавлен пробел перед TABLE
-                        + " id varchar(200) not null ,"
-                        + " title varchar(200) not null ,"
-                        + " author varchar(200) not null ,"
-                        + " publisher varchar(200) not null ,"
-                        + " quantity int not null ,"
-                        + " isAvail boolean default true,"
-                        + " primary key(id)"
+                stmt.execute("CREATE TABLE \"" + TABLE_NAME + "\" (" // Добавлен пробел перед TABLE
+                        + " \"id\" varchar(200) not null ,"
+                        + " \"title\" varchar(200) not null ,"
+                        + " \"author\" varchar(200) not null ,"
+                        + " \"publisher\" varchar(200) not null ,"
+                        + " \"quantity\" int not null ,"
+                        + " \"isAvail\" boolean default true,"
+                        + " primary key(\"id\")"
                         + ")");
             }
         } catch (SQLException ex) {
@@ -83,11 +83,11 @@ public class DatabaseHandler {
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists.");
             } else {
-                stmt.execute("CREATE TABLE " + TABLE_NAME + "(" // Добавлен пробел перед TABLE
-                        + " bookID varchar(200) not null ,"
-                        + " memberID varchar(200) not null ,"
-                        + " dateIssued date not null ,"
-                        + " primary key(bookID)"
+                stmt.execute("CREATE TABLE \"" + TABLE_NAME + "\" ("
+                        + " \"bookID\" varchar(200) not null ,"
+                        + " \"memberID\" varchar(200) not null ,"
+                        + " \"dateIssued\" date not null ,"
+                        + " primary key(\"bookID\")"
                         + ")");
             }
         } catch (SQLException ex) {
@@ -152,7 +152,7 @@ public class DatabaseHandler {
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         try {
             String query1 = "SELECT COUNT(*) FROM \"addMember\"";
-            String query2 = "SELECT COUNT(DISTINCT memberID) FROM \"issuedBooks\"";
+            String query2 = "SELECT COUNT(DISTINCT \"memberID\") FROM \"issuedBooks\"";
 
             ResultSet rs = execQuery(query1);
             if (rs.next()) {
@@ -176,7 +176,7 @@ public class DatabaseHandler {
     // Deleting members
     public boolean deleteMember(ViewMembersController.Member member) {
         try {
-            String deleteStatement = "Delete from \"addMember\" where memberID = ?";
+            String deleteStatement = "Delete from \"addMember\" where \"memberID\" = ?";
             PreparedStatement stmt = conn.prepareStatement(deleteStatement);
             stmt.setString(1, member.getMemberID());
             int res = stmt.executeUpdate();
@@ -192,7 +192,7 @@ public class DatabaseHandler {
     // Deleting books
     public boolean deleteBook(BookListController.Book book) {
         try {
-            String deleteStatement = "Delete from addBook where id = ?";
+            String deleteStatement = "Delete from \"addBook\" where \"id\" = ?";
             PreparedStatement stmt = conn.prepareStatement(deleteStatement);
             stmt.setString(1, book.getBookID());
             int res = stmt.executeUpdate();
@@ -207,7 +207,7 @@ public class DatabaseHandler {
 
     // Updating members
     public boolean updateMember(ViewMembersController.Member member) {
-        String update = "UPDATE addMember SET name =? , email = ? , phone = ? where memberID = ?";
+        String update = "UPDATE \"addMember\" SET \"name\" =? , \"email\" = ? , \"phone\" = ? where \"memberID\" = ?";
         try {
             PreparedStatement stmt = conn.prepareStatement(update);
             stmt.setString(1, member.getName());
@@ -228,7 +228,7 @@ public class DatabaseHandler {
 
     // Updating books
     public boolean updateBook(BookListController.Book book) {
-        String update = "UPDATE addBook SET title =? , author = ? , publisher = ?,quantity = ? where id = ?";
+        String update = "UPDATE \"addBook\" SET \"title\" =? , \"author\" = ? , \"publisher\" = ?,\"quantity\" = ? where \"id\" = ?";
         try {
             PreparedStatement stmt = conn.prepareStatement(update);
             stmt.setString(1, book.getTitle());

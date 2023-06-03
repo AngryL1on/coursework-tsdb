@@ -101,7 +101,7 @@ public class AddBookController implements Initializable {
         }
 
         // If all fields are OK we add the values to the database
-        String qu = "INSERT INTO addBook VALUES (" +
+        String qu = "INSERT INTO \"addBook\" VALUES (" +
                 "'" + bookId + "'," +
                 "'" + bookName + "'," +
                 "'" + bookAuthor + "'," +

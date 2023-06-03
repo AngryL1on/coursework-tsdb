@@ -40,7 +40,6 @@ import java.util.logging.Logger;
 
 public class MainController implements Initializable  {
 
-    private static final String GitHub = "https://github.com/BlertaMecini/Library-Managment-System-KNK";
     Connection conn;
     DatabaseHandler databaseHandler;
     PieChart bookChart;
@@ -115,7 +114,7 @@ public class MainController implements Initializable  {
         String mid = memberID.getText();
         if (!id.isEmpty() && !mid.isEmpty()) {
 
-            String qu = "SELECT * FROM issuedBooks WHERE bookID = '" + id + "' and memberID='" + mid + "'";
+            String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + id + "' and \"memberID\"='" + mid + "'";
 
             ResultSet rs = databaseHandler.execQuery(qu);
 
@@ -139,10 +138,10 @@ public class MainController implements Initializable  {
                     int mRenewCount = rs.getInt("renew_count");
 
 
-                    String query = "SELECT * FROM addBook WHERE id = '" + mBookID + "'";
+                    String query = "SELECT * FROM \"addBook\" WHERE \"id\" = '" + mBookID + "'";
                     ResultSet r1 = databaseHandler.execQuery(query);
 
-                    String qu1 = "SELECT * FROM \"addMember\" WHERE memberID = '" + mMemberID + "'";
+                    String qu1 = "SELECT * FROM \"addMember\" WHERE \"memberID\" = '" + mMemberID + "'";
                     ResultSet r2 = databaseHandler.execQuery(qu1);
 
                     while (r1.next() && r2.next()) {
@@ -263,7 +262,7 @@ public class MainController implements Initializable  {
         clearBookcache();
 
         String id = bookIdInput.getText();
-        String query = "SELECT * FROM addBook WHERE id='" + id + "'";
+        String query = "SELECT * FROM \"addBook\" WHERE \"id\"='" + id + "'";
         ResultSet rs = databaseHandler.execQuery(query);
         Boolean flag = false;
 
@@ -311,7 +310,7 @@ public class MainController implements Initializable  {
 
 
         String id = memberIdInput.getText();
-        String query = "SELECT * FROM \"addMember\" WHERE memberID='" + id + "'";
+        String query = "SELECT * FROM \"addMember\" WHERE \"memberID\"='" + id + "'";
         ResultSet rs = databaseHandler.execQuery(query);
         Boolean flag = false;
         try {
@@ -380,12 +379,6 @@ public class MainController implements Initializable  {
         loadWindow("/ru/rutmiit/lsm/views/issuedBooks.fxml", "View Issued Books");
     }
 
-    @FXML
-    private void aboutHandler(ActionEvent actionEvent) {
-        loadWindow("/ru/rutmiit/lsm/views/aboutUs.fxml", "About Us");
-    }
-
-
     // A method for loading web pages
     private void loadWebpage(String url) {
         try {
@@ -405,13 +398,6 @@ public class MainController implements Initializable  {
         Scene scene = new Scene(new StackPane(browser));
         stage.setScene(scene);
         stage.show();
-    }
-
-
-    // Loading GitHub
-    @FXML
-    private void loadGitHub(ActionEvent event) {
-        loadWebpage(GitHub);
     }
 
 
@@ -436,8 +422,8 @@ public class MainController implements Initializable  {
 
             Optional<ButtonType> response = alert.showAndWait();
             if (response.get() == ButtonType.OK) {
-                String query = "SELECT memberID,bookID from issuedBooks where memberID='" + memberID + "'" +
-                        "and bookID ='" + bookID + "'";
+                String query = "SELECT \"memberID\",\"bookID\" from \"issuedBooks\" where \"memberID\"='" + memberID + "'" +
+                        "and \"bookID\" ='" + bookID + "'";
                 ResultSet result = databaseHandler.execQuery(query);
 
                 try {
@@ -454,12 +440,12 @@ public class MainController implements Initializable  {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-                if (isAvailable == "Available") {
-                    String query1 = "INSERT INTO issuedBooks(bookID,memberID) VALUES("
+                if (isAvailable.equals("Available")) {
+                    String query1 = "INSERT INTO \"issuedBooks\"(\"bookID\",\"memberID\") VALUES("
                             + "'" + bookID + "',"
                             + "'" + memberID + "')";
 
-                    String query2 = "UPDATE addBook SET  quantity=quantity-1  where id='" + bookID + "'";
+                    String query2 = "UPDATE \"addBook\" SET  \"quantity\"=\"quantity\"-1  where \"id\"='" + bookID + "'";
 
 
                     if (databaseHandler.execAction(query1) && databaseHandler.execAction(query2)) {
@@ -472,12 +458,12 @@ public class MainController implements Initializable  {
                         clearIssueEntries();
                         hideShowGraph(true);
 
-                        String query3 = "SELECT quantity from addBook where id='" + bookID + "'";
+                        String query3 = "SELECT \"quantity\" from \"addBook\" where \"id\"='" + bookID + "'";
                         ResultSet rs = databaseHandler.execQuery(query3);
                         if (rs.next()) {
                             int qty = rs.getInt("quantity");
                             if (qty == 0) {
-                                String query4 = "UPDATE addBook SET  isAvail=false  where id='" + bookID + "'";
+                                String query4 = "UPDATE \"addBook\" SET  \"isAvail\"=false  where \"id\"='" + bookID + "'";
                                 databaseHandler.execAction(query4);
                             }
                         }
@@ -549,8 +535,8 @@ public class MainController implements Initializable  {
 
             String id = bookID.getText();
             String mid = memberID.getText();
-            String ac1 = " DELETE FROM issuedBooks WHERE bookID = '" + id + "' and memberID = '" + mid + "'";
-            String ac2 = "UPDATE addBook SET quantity = quantity+1  WHERE id= '" + id + "'";
+            String ac1 = " DELETE FROM \"issuedBooks\" WHERE \"bookID\" = '" + id + "' and \"memberID\" = '" + mid + "'";
+            String ac2 = "UPDATE \"addBook\" SET quantity = quantity+1  WHERE id= '" + id + "'";
 
 
             if (databaseHandler.execAction(ac1) && databaseHandler.execAction(ac2)) {
@@ -602,7 +588,7 @@ public class MainController implements Initializable  {
         alert1.setContentText("Are you sure you want to renew the book ?");
         Optional<ButtonType> response = alert1.showAndWait();
         if (response.get() == ButtonType.OK) {
-            String ac = "UPDATE issuedBooks SET issueTime = CURRENT_TIMESTAMP,renew_count = renew_count+1 WHERE bookID = '" + bookID.getText() + "'";
+            String ac = "UPDATE \"issuedBooks\" SET \"issueTime\" = CURRENT_TIMESTAMP,\"renew_count\" = \"renew_count\"+1 WHERE \"bookID\" = '" + bookID.getText() + "'";
             System.out.println(ac);
             if (databaseHandler.execAction(ac)) {
 
@@ -646,7 +632,7 @@ public class MainController implements Initializable  {
 
         Optional<ButtonType> response = alert.showAndWait();
         if (response.get() == ButtonType.OK) {
-            Parent parent = FXMLLoader.load(getClass().getResource("../views/login.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/ru/rutmiit/lsm/views/login.fxml"));
             Scene scene = new Scene(parent);
             Stage primaryStage = new Stage();
             primaryStage.initStyle(StageStyle.DECORATED);

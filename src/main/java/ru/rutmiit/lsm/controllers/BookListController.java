@@ -100,7 +100,7 @@ public class BookListController implements Initializable {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/views/addBook.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/rutmiit/lsm/views/addBook.fxml"));
 
             Parent parent = loader.load();
 
@@ -182,7 +182,7 @@ public class BookListController implements Initializable {
     private void loadData() {
         ObservableList<Book> list = FXCollections.observableArrayList();
         DatabaseHandler handler = DatabaseHandler.getInstance();
-        String  qu = "SELECT * FROM addBook";
+        String  qu = "SELECT * FROM \"addBook\"";
         ResultSet rs = handler.execQuery(qu);
         try {
             while (rs.next()) {

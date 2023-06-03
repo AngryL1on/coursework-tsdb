@@ -96,7 +96,7 @@ public class ViewMembersController implements Initializable {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/views/addMember.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/rutmiit/lsm/views/addMember.fxml"));
 
             Parent parent = loader.load();
 
