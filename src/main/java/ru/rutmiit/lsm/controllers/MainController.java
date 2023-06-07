@@ -39,9 +39,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController implements Initializable  {
-
     Connection conn;
-    DatabaseHandler databaseHandler;
+    DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     PieChart bookChart;
     PieChart memberChart;
     ObservableList<Issue> issueData = FXCollections.observableArrayList();
@@ -90,7 +89,6 @@ public class MainController implements Initializable  {
     @FXML
     private TableColumn<Issue, String> renewColumn;
 
-
     private void initCol() {
         issueDateColumn.setCellValueFactory(new PropertyValueFactory<>("issueTime"));
         renewColumn.setCellValueFactory(new PropertyValueFactory<>("renew_count"));
@@ -103,19 +101,14 @@ public class MainController implements Initializable  {
 
     }
 
-
     @FXML
     private void loadBookInfo2() {
-
         issueData.clear();
-        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
         String id = bookID.getText();
         String mid = memberID.getText();
         if (!id.isEmpty() && !mid.isEmpty()) {
-
             String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + id + "' and \"memberID\"='" + mid + "'";
-
             ResultSet rs = databaseHandler.execQuery(qu);
 
             try {
@@ -128,15 +121,12 @@ public class MainController implements Initializable  {
                     clearOnSubmissionIssueEntries();
                     return;
                 }
-
                 while (rs.next()) {
-
                     String mBookID = id;
                     String mMemberID = mid;
                     Timestamp mIssueTime = rs.getTimestamp("issueTime");
                     String issueTime = mIssueTime.toString();
                     int mRenewCount = rs.getInt("renew_count");
-
 
                     String query = "SELECT * FROM \"addBook\" WHERE \"id\" = '" + mBookID + "'";
                     ResultSet r1 = databaseHandler.execQuery(query);
@@ -152,18 +142,13 @@ public class MainController implements Initializable  {
                         String email = r2.getString("email");
 
                         issueData.add(new Issue(issueTime, mRenewCount, mBookID, title, author, mMemberID, name, email));
-
                     }
-
                 }
-
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
             isReadyForSubmission = true;
             tableView.setItems(issueData);
-
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -174,7 +159,6 @@ public class MainController implements Initializable  {
         }
     }
 
-
     @Override
     public void initialize(URL rl, ResourceBundle rb) {
         databaseHandler = DatabaseHandler.getInstance();
@@ -182,23 +166,19 @@ public class MainController implements Initializable  {
         initCol();
     }
 
-
     // Showing the graphs
     private void initGraph() {
-
         bookChart = new PieChart(databaseHandler.getBookGraphicStatistics());
         memberChart = new PieChart(databaseHandler.getMemberGraphicStatistics());
         bookInfoContainer.getChildren().add(bookChart);
         memberInfoContainer.getChildren().add(memberChart);
     }
 
-
     // Refreshing the graphs
     public void refreshGraphs() {
         bookChart.setData(databaseHandler.getBookGraphicStatistics());
         memberChart.setData(databaseHandler.getMemberGraphicStatistics());
     }
-
 
     // Hidding/Showing the graphs
     private void hideShowGraph(Boolean status) {
@@ -248,18 +228,15 @@ public class MainController implements Initializable  {
             stage.getIcons().add(new Image("https://static.thenounproject.com/png/3314579-200.png"));
             stage.setResizable(false);
             stage.show();
-
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-
     // Loading the book information for issuing books
     @FXML
     private void loadBookInfo(ActionEvent actionEvent) throws SQLException {
-
-        clearBookcache();
+        clearBookCache();
 
         String id = bookIdInput.getText();
         String query = "SELECT * FROM \"addBook\" WHERE \"id\"='" + id + "'";
@@ -288,7 +265,6 @@ public class MainController implements Initializable  {
                 alert.setContentText("No such book with this ID is found!");
                 alert.showAndWait();
                 bookIdInput.clear();
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
@@ -296,18 +272,16 @@ public class MainController implements Initializable  {
     }
 
     // A method to clear the book cache when we search for a book
-    void clearBookcache() {
+    void clearBookCache() {
         bookName.setText("");
         authorName.setText("");
         availability.setText("");
     }
 
-
     // A method for loading member info for issuing books
     @FXML
     private void loadMemberInfo(ActionEvent actionEvent) throws SQLException {
-        clearMembercache();
-
+        clearMemberCache();
 
         String id = memberIdInput.getText();
         String query = "SELECT * FROM \"addMember\" WHERE \"memberID\"='" + id + "'";
@@ -341,7 +315,7 @@ public class MainController implements Initializable  {
     }
 
     // Clearing the member cache
-    void clearMembercache() {
+    void clearMemberCache() {
         memberName.setText("");
         contact.setText("");
 
@@ -379,28 +353,6 @@ public class MainController implements Initializable  {
         loadWindow("/ru/rutmiit/lsm/views/issuedBooks.fxml", "View Issued Books");
     }
 
-    // A method for loading web pages
-    private void loadWebpage(String url) {
-        try {
-            Desktop.getDesktop().browse(new URI(url));
-        } catch (IOException | URISyntaxException e1) {
-            e1.printStackTrace();
-            handleWebpageLoadException(url);
-        }
-    }
-
-    // If exceptions happen during the loading process of web pages
-    private void handleWebpageLoadException(String url) {
-        WebView browser = new WebView();
-        WebEngine webEngine = browser.getEngine();
-        webEngine.load(url);
-        Stage stage = new Stage();
-        Scene scene = new Scene(new StackPane(browser));
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
     // Here we handle the issue book functionality
     @FXML
     private void issueHandler(ActionEvent actionEvent) throws SQLException {
@@ -422,7 +374,7 @@ public class MainController implements Initializable  {
 
             Optional<ButtonType> response = alert.showAndWait();
             if (response.get() == ButtonType.OK) {
-                String query = "SELECT \"memberID\",\"bookID\" from \"issuedBooks\" where \"memberID\"='" + memberID + "'" +
+                String query = "SELECT \"memberID\", \"bookID\" from \"issuedBooks\" where \"memberID\" ='" + memberID + "'" +
                         "and \"bookID\" ='" + bookID + "'";
                 ResultSet result = databaseHandler.execQuery(query);
 
@@ -440,13 +392,11 @@ public class MainController implements Initializable  {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-                if (isAvailable.equals("Available")) {
+                if (isAvailable == "Available") {
                     String query1 = "INSERT INTO \"issuedBooks\"(\"bookID\",\"memberID\") VALUES("
                             + "'" + bookID + "',"
                             + "'" + memberID + "')";
-
-                    String query2 = "UPDATE \"addBook\" SET  \"quantity\"=\"quantity\"-1  where \"id\"='" + bookID + "'";
-
+                    String query2 = "UPDATE \"addBook\" SET \"quantity\" = \"quantity\" - 1 where \"id\" ='" + bookID + "'";
 
                     if (databaseHandler.execAction(query1) && databaseHandler.execAction(query2)) {
                         refreshGraphs();
@@ -458,16 +408,15 @@ public class MainController implements Initializable  {
                         clearIssueEntries();
                         hideShowGraph(true);
 
-                        String query3 = "SELECT \"quantity\" from \"addBook\" where \"id\"='" + bookID + "'";
+                        String query3 = "SELECT \"quantity\" from \"addBook\" where \"id\" ='" + bookID + "'";
                         ResultSet rs = databaseHandler.execQuery(query3);
                         if (rs.next()) {
                             int qty = rs.getInt("quantity");
                             if (qty == 0) {
-                                String query4 = "UPDATE \"addBook\" SET  \"isAvail\"=false  where \"id\"='" + bookID + "'";
+                                String query4 = "UPDATE \"addBook\" SET \"isAvail\" = false where \"id\"='" + bookID + "'";
                                 databaseHandler.execAction(query4);
                             }
                         }
-
                     } else {
                         Alert alert2 = new Alert(Alert.AlertType.ERROR);
                         alert2.setTitle("FAILED");
@@ -498,13 +447,12 @@ public class MainController implements Initializable  {
         }
     }
 
-
     // Clearing issue book information
     private void clearIssueEntries() {
         bookIdInput.clear();
         memberIdInput.clear();
-        clearBookcache();
-        clearMembercache();
+        clearBookCache();
+        clearMemberCache();
     }
 
     // Clearing the info
@@ -517,7 +465,6 @@ public class MainController implements Initializable  {
     // Submission tab
     @FXML
     private void loadOnSubmissionOp(ActionEvent event) {
-
         if (isReadyForSubmission == false) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Failed");
@@ -532,12 +479,10 @@ public class MainController implements Initializable  {
         alert.setContentText("Are you sure you want to return the book ?");
         Optional<ButtonType> response = alert.showAndWait();
         if (response.get() == ButtonType.OK) {
-
             String id = bookID.getText();
             String mid = memberID.getText();
             String ac1 = " DELETE FROM \"issuedBooks\" WHERE \"bookID\" = '" + id + "' and \"memberID\" = '" + mid + "'";
             String ac2 = "UPDATE \"addBook\" SET quantity = quantity+1  WHERE id= '" + id + "'";
-
 
             if (databaseHandler.execAction(ac1) && databaseHandler.execAction(ac2)) {
                 Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -556,7 +501,6 @@ public class MainController implements Initializable  {
                 clearOnSubmissionIssueEntries();
                 isReadyForSubmission = false;
             }
-
         } else {
             Alert canceledAlert = new Alert(Alert.AlertType.INFORMATION);
             canceledAlert.setTitle("Canceled");
@@ -567,7 +511,6 @@ public class MainController implements Initializable  {
             clearOnSubmissionIssueEntries();
         }
     }
-
 
     // Renewal
     @FXML

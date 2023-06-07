@@ -39,7 +39,6 @@ public class IssuedBooksController implements Initializable {
 
     ObservableList<IssuedBook> list = FXCollections.observableArrayList();
 
-
     public static class IssuedBook {
         private final SimpleStringProperty bookId;
         private final SimpleStringProperty memberId;
@@ -52,7 +51,6 @@ public class IssuedBooksController implements Initializable {
             this.memberId = new SimpleStringProperty(memberId);
             this.issueTime = new SimpleStringProperty(issueTime);
             this.renew = new SimpleIntegerProperty(renew);
-
         }
 
         public String getBookId() {
@@ -99,18 +97,13 @@ public class IssuedBooksController implements Initializable {
                 String issueTime = issuedTime.toString();
                 Integer  renew = rs.getInt("renew_count");
 
-
                 list.add(new IssuedBook(bookId, memberId, issueTime, renew));
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         tableView.setItems(list);
     }
-
-
 
     void loadWindow(String loc, String title) {
         try {
