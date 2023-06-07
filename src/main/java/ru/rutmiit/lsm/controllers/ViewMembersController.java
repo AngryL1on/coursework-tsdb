@@ -1,5 +1,7 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseHandler;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +19,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +31,7 @@ import java.util.logging.Logger;
 
 public class ViewMembersController implements Initializable {
 
-    DatabaseHandler databaseHandler ;
+    DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     ObservableList<Member> list = FXCollections.observableArrayList();
     @FXML
     private TableView<Member> tableView;
@@ -49,7 +50,6 @@ public class ViewMembersController implements Initializable {
         //Fetch the selected row
         Member selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
         if (selectedForDeletion == null) {
-            //AlertMaker.showErrorMessage("No member selected", "Please select a member for deletion.");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("ERROR");
             alert.setContentText("No member selected ! Please select a member for deletion.");
@@ -63,7 +63,7 @@ public class ViewMembersController implements Initializable {
 
         if(answer.get() == ButtonType.OK){
             //Delete Member
-            Boolean result = DatabaseHandler.getInstance().deleteMember(selectedForDeletion);
+            boolean result = databaseHandler.deleteMember(selectedForDeletion);
             if(result){
                 Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
                 alert2.setHeaderText("SUCCESS");
@@ -88,7 +88,6 @@ public class ViewMembersController implements Initializable {
         Member selectedForEdit = tableView.getSelectionModel().getSelectedItem();
 
         if (selectedForEdit == null) {
-            //AlertMaker.showErrorMessage("No member selected", "Please select a member for deletion.");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("ERROR");
             alert.setContentText("No member selected ! Please select a member for edit-ing.");
@@ -100,7 +99,7 @@ public class ViewMembersController implements Initializable {
 
             Parent parent = loader.load();
 
-            AddMemberController controller = (AddMemberController) loader.getController();
+            AddMemberController controller = loader.getController();
             controller.inflatedUI(selectedForEdit);
             Stage stage = new  Stage(StageStyle.DECORATED);
             stage.setTitle("Edit Member");
@@ -169,9 +168,8 @@ public class ViewMembersController implements Initializable {
     }
     private void loadData() {
         list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM \"addMember\"";
-        ResultSet rs = handler.execQuery(qu);
+        ResultSet rs = databaseHandler.execQuery(qu);
         try {
             while (rs.next()) {
                 String memberID = rs.getString("memberID");
@@ -194,7 +192,6 @@ public class ViewMembersController implements Initializable {
     private void addNewMember(javafx.event.ActionEvent actionEvent) {
         loadWindow("/ru/rutmiit/lsm/views/addMember.fxml", "Add Member");
     }
-
 
     void loadWindow(String loc, String title) {
         try {

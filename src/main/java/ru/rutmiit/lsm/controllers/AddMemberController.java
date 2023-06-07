@@ -1,12 +1,13 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseHandler;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,9 +31,9 @@ public class AddMemberController implements Initializable {
     @FXML
     private CheckBox check;
     @FXML
-    private Button saveBtn;
+    private Button saveButton;
     @FXML
-    private Button cancelBtn;
+    private Button cancelButton;
 
     private Boolean isInEditMode = Boolean.FALSE;
 
@@ -51,8 +52,6 @@ public class AddMemberController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler = new DatabaseHandler();
     }
-
-
 
     @FXML
     // If the users click the save button , this is executed
@@ -109,7 +108,6 @@ public class AddMemberController implements Initializable {
             alert.showAndWait();
             return;
         }
-
 
         String qu = "INSERT INTO \"addMember\" VALUES (" +
                 "'" + mID + "'," +

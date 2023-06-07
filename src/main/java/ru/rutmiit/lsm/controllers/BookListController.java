@@ -1,5 +1,7 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseHandler;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,7 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,5 +1,7 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseHandler;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,7 +11,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,9 +31,9 @@ public class AddBookController implements Initializable {
     @FXML
     private TextField quantity;
     @FXML
-    private Button saveBtn;
+    private Button saveButton;
     @FXML
-    private Button cancelBtn;
+    private Button cancelButton;
     @FXML
     private CheckBox check;
 
@@ -74,7 +75,7 @@ public class AddBookController implements Initializable {
             alert.setContentText("All fields are required. Please fill them out!");
             alert.showAndWait();
             return;
-        } else if (onlyDigits == false && !bookId.startsWith("B")) {
+        } else if (!onlyDigits && !bookId.startsWith("B")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("ERROR");
             alert.setContentText("ID of book should start with letter 'B' followed by digits!");
@@ -170,7 +171,5 @@ public class AddBookController implements Initializable {
         isInEditMode = Boolean.TRUE;
 
         id.setEditable(false);
-
-
     }
 }

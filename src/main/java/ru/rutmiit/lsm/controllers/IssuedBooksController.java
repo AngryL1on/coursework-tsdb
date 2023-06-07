@@ -1,5 +1,7 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseHandler;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -11,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,7 +46,6 @@ public class IssuedBooksController implements Initializable {
         private final SimpleStringProperty issueTime;
         private final SimpleIntegerProperty renew;
 
-
         public IssuedBook(String bookId, String memberId, String issueTime,Integer renew) {
             this.bookId = new SimpleStringProperty(bookId);
             this.memberId = new SimpleStringProperty(memberId);
@@ -68,7 +68,6 @@ public class IssuedBooksController implements Initializable {
         public String getIssueTime() {
             return issueTime.get();
         }
-
     }
 
     @Override
@@ -82,7 +81,6 @@ public class IssuedBooksController implements Initializable {
         MemberCol.setCellValueFactory(new PropertyValueFactory<>("memberId"));
         TimeCol.setCellValueFactory(new PropertyValueFactory<>("issueTime"));
         RenewCol.setCellValueFactory(new PropertyValueFactory<>("renew"));
-
     }
 
     private void loadData() {

@@ -1,7 +1,7 @@
 
 /* Styling the add member screen */
 
-.addMemberBtn , .viewMemberBtn{
+.addMemberButton , .viewMemberButton{
     -fx-background-color: #929FB9;
     -fx-text-fill: white;
     -fx-font-size:16;
@@ -9,7 +9,7 @@
     -fx-border-color: white;
 }
 
-.addMemberBtn:hover , viewMemberBtn:hover{
+.addMemberButton:hover , viewMemberButton:hover{
     -fx-background-color: #929FCC;
     -fx-text-fill: white;
 }

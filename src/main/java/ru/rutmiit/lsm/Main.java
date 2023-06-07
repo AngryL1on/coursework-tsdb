@@ -24,7 +24,7 @@ public class Main extends Application {
         primaryStage.show();
 
         // A thread so it makes opening the windows faster
-        new Thread(() -> DatabaseHandler.getInstance()).start();
+        new Thread(DatabaseHandler::getInstance).start();
     }
 
     public static void main(String[] args) {

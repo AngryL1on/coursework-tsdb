@@ -1,5 +1,7 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseConnection;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +14,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import ru.rutmiit.lsm.repositories.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,7 +35,6 @@ public class LoginController {
 
     public void loginButtonOnAction(ActionEvent e) {
         if(!usernameTextField.getText().isBlank() && !passwordPasswordField.getText().isBlank()) {
-            // loginMessageLabel.setText("You try to login!");
             DatabaseConnection connectNow = new DatabaseConnection();
             Connection connectDB = connectNow.getConnection();
 
@@ -45,14 +45,12 @@ public class LoginController {
 
                 while(queryResult.next()) {
                     if(queryResult.getInt(1) == 1) {
-                        //loginMessageLabel.setText("Welcome!");
                         Parent parent = FXMLLoader.load(getClass().getResource("/ru/rutmiit/lsm/views/main-screen.fxml"));
 
                         Scene scene = new Scene(parent);
-                        Stage primaryStage=new Stage();
-                        //primaryStage.initStyle(StageStyle.DECORATED);
-                        primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                        Stage primaryStage = new Stage();
 
+                        primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                         primaryStage.setScene(scene);
                         primaryStage.setTitle("Library Management System");
                         primaryStage.getIcons().add(new Image("https://static.thenounproject.com/png/3314579-200.png"));

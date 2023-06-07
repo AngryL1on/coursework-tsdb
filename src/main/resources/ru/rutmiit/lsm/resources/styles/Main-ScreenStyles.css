@@ -1,12 +1,12 @@
 /*Styling the main window*/
 
 .root{
-    -fx-background-color: #0f3057;
+    -fx-background-color: #263F73;
     -fx-font-size:16;
 }
 
 .borderPane{
-    -fx-background-color: #0f3057;
+    -fx-background-color: #263F73;
 }
 
 .menuBar{
@@ -32,7 +32,7 @@
 }
 
 .side-buttons{
-    -fx-background-color: #0f3057;
+    -fx-background-color: #263F73;
     -fx-border-color: #00587a;
     -fx-text-fill: #e7e7de;
     -fx-font-weight:bold;
@@ -42,7 +42,6 @@
     -fx-background-color:#929FB9;
     -fx-text-fill: #FFFFFF;
 }
-
 
 .setup-button {
     -fx-background-color:gray;
@@ -55,7 +54,6 @@
     -fx-text-fill: #FFFFFF;
 }
 
-
 /*Styling the add book window*/
 
 .addBookButtons{
@@ -66,13 +64,10 @@
     -fx-border-color: white;
 }
 
-
 .addBookButtons:hover {
     -fx-background-color: #929FCC;
     -fx-text-fill: white;
 }
 
-
 .data0.chart-pie { -fx-pie-color: teal; }
 .data1.chart-pie { -fx-pie-color: cyan; }
-#e7e7de

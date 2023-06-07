@@ -40,12 +40,12 @@
             <children>
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" stylesheets="@../resources/styles/AddMember.css">
                     <children>
-                        <Button fx:id="addNewBtn" mnemonicParsing="false" onAction="#addNewMember" prefHeight="28.0" prefWidth="103.0" styleClass="viewMemberBtn" text="Add New">
+                        <Button fx:id="addNewButton" mnemonicParsing="false" onAction="#addNewMember" prefHeight="28.0" prefWidth="103.0" styleClass="viewMemberButton" text="Add New">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleRefresh" prefHeight="28.0" prefWidth="103.0" styleClass="viewMemberBtn" text="Refresh">
+                        <Button mnemonicParsing="false" onAction="#handleRefresh" prefHeight="28.0" prefWidth="103.0" styleClass="viewMemberButton" text="Refresh">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>

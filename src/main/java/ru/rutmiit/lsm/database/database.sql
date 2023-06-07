@@ -12,7 +12,6 @@ CREATE TABLE "userAccount" (
 INSERT INTO "userAccount" ("firstName", "lastName", "userName", password)
 VALUES ('Vadim', 'Lushin', 'admin', '123456');
 
-
 CREATE TABLE "addBook" (
                            "id" varchar(200) NOT NULL,
                            "title" varchar(200) NOT NULL,

@@ -19,7 +19,6 @@ public class DatabaseHandler {
     private static Connection conn = null;
     private static Statement stmt = null;
 
-
     // Constructor of the class has methods that are called when the class is instantiated
     public DatabaseHandler() {
         createConnection();
@@ -57,7 +56,7 @@ public class DatabaseHandler {
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + " already exists.");
             } else {
-                stmt.execute("CREATE TABLE \"" + TABLE_NAME + "\" (" // Добавлен пробел перед TABLE
+                stmt.execute("CREATE TABLE \"" + TABLE_NAME + "\" ("
                         + " \"id\" varchar(200) not null ,"
                         + " \"title\" varchar(200) not null ,"
                         + " \"author\" varchar(200) not null ,"
@@ -228,7 +227,7 @@ public class DatabaseHandler {
 
     // Updating books
     public boolean updateBook(BookListController.Book book) {
-        String update = "UPDATE \"addBook\" SET \"title\" =? , \"author\" = ? , \"publisher\" = ?,\"quantity\" = ? where \"id\" = ?";
+        String update = "UPDATE \"addBook\" SET \"title\" =? , \"author\" = ? , \"publisher\" = ?,\"quantity\" = ? WHERE \"id\" = ?";
         try {
             PreparedStatement stmt = conn.prepareStatement(update);
             stmt.setString(1, book.getTitle());

@@ -13,21 +13,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -98,17 +92,16 @@ public class MainController implements Initializable  {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("memberID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-
     }
 
     @FXML
-    private void loadBookInfo2() {
+    private void loadBookInfo2(ActionEvent actionEvent) throws SQLException {
         issueData.clear();
 
-        String id = bookID.getText();
-        String mid = memberID.getText();
-        if (!id.isEmpty() && !mid.isEmpty()) {
-            String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + id + "' and \"memberID\"='" + mid + "'";
+        String bookID = this.bookID.getText();
+        String memberID = this.memberID.getText();
+        if (!bookID.isEmpty() && !memberID.isEmpty()) {
+            String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + bookID + "' and \"memberID\"='" + memberID + "'";
             ResultSet rs = databaseHandler.execQuery(qu);
 
             try {
@@ -116,14 +109,14 @@ public class MainController implements Initializable  {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("ERROR");
                     alert.setHeaderText(null);
-                    alert.setContentText("The book with ID: " + id + " wasn't issued to member with  ID: " + mid + " !");
+                    alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with  ID: " + memberID + " !");
                     alert.showAndWait();
                     clearOnSubmissionIssueEntries();
                     return;
                 }
                 while (rs.next()) {
-                    String mBookID = id;
-                    String mMemberID = mid;
+                    String mBookID = bookID;
+                    String mMemberID = memberID;
                     Timestamp mIssueTime = rs.getTimestamp("issueTime");
                     String issueTime = mIssueTime.toString();
                     int mRenewCount = rs.getInt("renew_count");
@@ -286,7 +279,7 @@ public class MainController implements Initializable  {
         String id = memberIdInput.getText();
         String query = "SELECT * FROM \"addMember\" WHERE \"memberID\"='" + id + "'";
         ResultSet rs = databaseHandler.execQuery(query);
-        Boolean flag = false;
+        boolean flag = false;
         try {
             while (rs.next()) {
                 hideShowGraph(false);
@@ -564,7 +557,7 @@ public class MainController implements Initializable  {
     }
 
 
-    // Logging the admin out if he clicks the log out menu item
+    // Logging the admin out if he clicks the logout menu item
     @FXML
     private void handleMenuLogOut(ActionEvent actionEvent) throws IOException {
 
@@ -591,7 +584,7 @@ public class MainController implements Initializable  {
     }
 
 
-    // Logging the admin out if he clicks the log out button
+    // Logging the admin out if he clicks the logout button
     @FXML
     private void logoutAction(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

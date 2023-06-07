@@ -11,6 +11,7 @@ module ru.rutmiit.lsm {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires org.postgresql.jdbc;
 
     opens ru.rutmiit.lsm to javafx.fxml;
     exports ru.rutmiit.lsm;
