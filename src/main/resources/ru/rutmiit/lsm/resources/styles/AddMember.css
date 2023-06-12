@@ -9,7 +9,7 @@
     -fx-border-color: white;
 }
 
-.addMemberButton:hover , viewMemberButton:hover{
+.addMemberButton:hover , .viewMemberButton:hover{
     -fx-background-color: #929FCC;
     -fx-text-fill: white;
 }

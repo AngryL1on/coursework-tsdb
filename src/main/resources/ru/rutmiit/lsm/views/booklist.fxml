@@ -40,9 +40,6 @@
                   stylesheets="@../resources/styles/AddMember.css">
                 <Button fx:id="addNewButton" mnemonicParsing="false" onAction="#addNewBook" prefHeight="28.0"
                         prefWidth="103.0" styleClass="viewMemberButton" text="Add New">
-                    <HBox.margin>
-                        <Insets/>
-                    </HBox.margin>
                 </Button>
                 <Button mnemonicParsing="false" onAction="#handleRefresh" prefHeight="28.0" prefWidth="103.0"
                         styleClass="viewMemberButton" text="Refresh">

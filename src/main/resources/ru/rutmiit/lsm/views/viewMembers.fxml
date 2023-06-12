@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rutmiit.lsm.controllers.ViewMembersController">
     <top>
         <TableView fx:id="tableView" prefHeight="335.0" prefWidth="600.0" styleClass="columns" BorderPane.alignment="CENTER">
@@ -37,22 +33,21 @@
     </top>
     <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-            <children>
-                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" stylesheets="@../resources/styles/AddMember.css">
-                    <children>
-                        <Button fx:id="addNewButton" mnemonicParsing="false" onAction="#addNewMember" prefHeight="28.0" prefWidth="103.0" styleClass="viewMemberButton" text="Add New">
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#handleRefresh" prefHeight="28.0" prefWidth="103.0" styleClass="viewMemberButton" text="Refresh">
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
-            </children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0"
+                  stylesheets="@../resources/styles/AddMember.css">
+                <Button fx:id="addNewButton" mnemonicParsing="false" onAction="#addNewMember" prefHeight="28.0"
+                        prefWidth="103.0" styleClass="viewMemberButton" text="Add New">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#handleRefresh" prefHeight="28.0" prefWidth="103.0"
+                        styleClass="viewMemberButton" text="Refresh">
+                    <HBox.margin>
+                        <Insets right="20.0"/>
+                    </HBox.margin>
+                </Button>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

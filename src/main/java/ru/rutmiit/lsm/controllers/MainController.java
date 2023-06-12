@@ -23,7 +23,6 @@ import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -33,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController implements Initializable  {
-    Connection conn;
     DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     PieChart bookChart;
     PieChart memberChart;
@@ -94,64 +92,6 @@ public class MainController implements Initializable  {
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
     }
 
-    @FXML
-    private void loadBookInfo2(ActionEvent actionEvent) throws SQLException {
-        issueData.clear();
-
-        String bookID = this.bookID.getText();
-        String memberID = this.memberID.getText();
-        if (!bookID.isEmpty() && !memberID.isEmpty()) {
-            String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + bookID + "' and \"memberID\"='" + memberID + "'";
-            ResultSet rs = databaseHandler.execQuery(qu);
-
-            try {
-                if (!rs.next()) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("ERROR");
-                    alert.setHeaderText(null);
-                    alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with  ID: " + memberID + " !");
-                    alert.showAndWait();
-                    clearOnSubmissionIssueEntries();
-                    return;
-                }
-                while (rs.next()) {
-                    String mBookID = bookID;
-                    String mMemberID = memberID;
-                    Timestamp mIssueTime = rs.getTimestamp("issueTime");
-                    String issueTime = mIssueTime.toString();
-                    int mRenewCount = rs.getInt("renew_count");
-
-                    String query = "SELECT * FROM \"addBook\" WHERE \"id\" = '" + mBookID + "'";
-                    ResultSet r1 = databaseHandler.execQuery(query);
-
-                    String qu1 = "SELECT * FROM \"addMember\" WHERE \"memberID\" = '" + mMemberID + "'";
-                    ResultSet r2 = databaseHandler.execQuery(qu1);
-
-                    while (r1.next() && r2.next()) {
-
-                        String title = r1.getString("title");
-                        String author = r1.getString("author");
-                        String name = r2.getString("name");
-                        String email = r2.getString("email");
-
-                        issueData.add(new Issue(issueTime, mRenewCount, mBookID, title, author, mMemberID, name, email));
-                    }
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            isReadyForSubmission = true;
-            tableView.setItems(issueData);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("You must select Book ID and Member ID to view the information!");
-            alert.showAndWait();
-            clearOnSubmissionIssueEntries();
-        }
-    }
-
     @Override
     public void initialize(URL rl, ResourceBundle rb) {
         databaseHandler = DatabaseHandler.getInstance();
@@ -187,7 +127,7 @@ public class MainController implements Initializable  {
 
     // Loading the corresponding windows when buttons are clicked
     @FXML
-    private void loadAddMember(javafx.event.ActionEvent actionEvent) {
+    private void loadAddMember(ActionEvent actionEvent) {
         loadWindow("/ru/rutmiit/lsm/views/addMember.fxml", "Add Member");
     }
 
@@ -263,6 +203,111 @@ public class MainController implements Initializable  {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    private void loadBookInfo2(ActionEvent actionEvent) throws SQLException {
+
+        issueData.clear();
+
+        String bookID = this.bookID.getText();
+        String memberID = this.memberID.getText();
+        if (!bookID.isEmpty() && !memberID.isEmpty()) {
+            String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + bookID + "' and \"memberID\"='" + memberID + "'";
+            ResultSet rs = databaseHandler.execQuery(qu);
+
+            try {
+                if (!rs.next()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("ERROR");
+                    alert.setHeaderText(null);
+                    alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with  ID: " + memberID + " !");
+                    alert.showAndWait();
+                    clearOnSubmissionIssueEntries();
+                    return;
+                } else {
+                    Timestamp mIssueTime = rs.getTimestamp("issueTime");
+                    String issueTime = mIssueTime.toString();
+                    int mRenewCount = rs.getInt("renew_count");
+
+                    String query = "SELECT * FROM \"addBook\" WHERE \"id\" = '" + bookID + "'";
+                    ResultSet r1 = databaseHandler.execQuery(query);
+
+                    String qu1 = "SELECT * FROM \"addMember\" WHERE \"memberID\" = '" + memberID + "'";
+                    ResultSet r2 = databaseHandler.execQuery(qu1);
+
+                    while (r1.next() && r2.next()) {
+                        String title = r1.getString("title");
+                        String author = r1.getString("author");
+                        String name = r2.getString("name");
+                        String email = r2.getString("email");
+
+                        issueData.add(new Issue(issueTime, mRenewCount, bookID, title, author, memberID, name, email));
+                    }
+
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            isReadyForSubmission = true;
+            tableView.setItems(issueData);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("You must select Book ID and Member ID to view the information!");
+            alert.showAndWait();
+            clearOnSubmissionIssueEntries();
+        }
+    }
+
+//    private void loadBookInfo2(ActionEvent actionEvent) throws SQLException {
+//        issueData.clear();
+//
+//        String bookID = this.bookID.getText();
+//        String memberID = this.memberID.getText();
+//
+//        if (!bookID.isEmpty() && !memberID.isEmpty()) {
+//            String qu = "SELECT \"issuedBooks\".\"issueTime\", \"issuedBooks\".renew_count, \"addBook\".id, \"addBook\".title, \"addBook\".author, \"addMember\".\"memberID\", \"addMember\".name, \"addMember\".email" +
+//                    "FROM \"issuedBooks\"" +
+//                    "JOIN \"addBook\" ON \"issuedBooks\".\"bookID\" = \"addBook\".id" +
+//                    "JOIN \"addMember\" ON \"issuedBooks\".\"memberID\" = \"addMember\".\"memberID\"" +
+//                    "WHERE \"issuedBooks\".\"bookID\" = '" + bookID + " AND \"addMember\".\"memberID\" = '" + memberID + "'";
+//
+//            ResultSet rs = databaseHandler.execQuery(qu);
+//
+//            if (!rs.next()) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("ERROR");
+//                alert.setHeaderText(null);
+//                alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with ID: " + memberID + " !");
+//                alert.showAndWait();
+//                clearOnSubmissionIssueEntries();
+//                return;
+//            }
+//
+//            do {
+//                Timestamp mIssueTime = rs.getTimestamp("issueTime");
+//                String issueTime = mIssueTime.toString();
+//                int mRenewCount = rs.getInt("renew_count");
+//                String title = rs.getString("title");
+//                String author = rs.getString("author");
+//                String name = rs.getString("name");
+//                String email = rs.getString("email");
+//
+//                issueData.add(new Issue(issueTime, mRenewCount, bookID, title, author, memberID, name, email));
+//            } while (rs.next());
+//
+//            isReadyForSubmission = true;
+//            tableView.setItems(issueData);
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("ERROR");
+//            alert.setHeaderText(null);
+//            alert.setContentText("You must select Book ID and Member ID to view the information!");
+//            alert.showAndWait();
+//            clearOnSubmissionIssueEntries();
+//        }
+//    }
 
     // A method to clear the book cache when we search for a book
     void clearBookCache() {
@@ -615,14 +660,14 @@ public class MainController implements Initializable  {
 
 
         public Issue(String issueTime, Integer renew_count, String bookID, String title, String author, String memberID, String name, String email) {
-            this.memberID = new SimpleStringProperty(memberID);
-            this.name = new SimpleStringProperty(name);
-            this.email = new SimpleStringProperty(email);
+            this.issueTime = new SimpleStringProperty(issueTime);
+            this.renew_count = new SimpleIntegerProperty(renew_count);
             this.bookID = new SimpleStringProperty(bookID);
             this.title = new SimpleStringProperty(title);
             this.author = new SimpleStringProperty(author);
-            this.issueTime = new SimpleStringProperty(issueTime);
-            this.renew_count = new SimpleIntegerProperty(renew_count);
+            this.memberID = new SimpleStringProperty(memberID);
+            this.name = new SimpleStringProperty(name);
+            this.email = new SimpleStringProperty(email);
         }
 
         public String getMemberID() {
