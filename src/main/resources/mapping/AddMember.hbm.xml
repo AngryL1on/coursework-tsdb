@@ -1,0 +1,9 @@
+<hibernate-mapping>
+    <class name="ru.rutmiit.lsm.entities.AddMember" table="addMember">
+        <property column="id" name="memberID" type="java.lang.Integer"/>
+        <property column="name" name="name" type="java.lang.String"/>
+        <property column="email" name="email" type="java.lang.String"/>
+        <property column="phone" name="phone" type="java.lang.String"/>
+        <property column="gender" name="gender" type="java.lang.Short"/>
+    </class>
+</hibernate-mapping>

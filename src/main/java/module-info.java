@@ -12,6 +12,8 @@ module ru.rutmiit.lsm {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires org.postgresql.jdbc;
+    requires org.hibernate.orm.core;
+    requires jakarta.persistence;
 
     opens ru.rutmiit.lsm to javafx.fxml;
     exports ru.rutmiit.lsm;

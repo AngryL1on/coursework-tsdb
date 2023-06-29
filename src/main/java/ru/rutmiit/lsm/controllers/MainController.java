@@ -1,5 +1,7 @@
 package ru.rutmiit.lsm.controllers;
 
+import ru.rutmiit.lsm.repositories.DatabaseHandler;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,7 +21,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ru.rutmiit.lsm.repositories.DatabaseHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -124,7 +125,6 @@ public class MainController implements Initializable  {
         }
     }
 
-
     // Loading the corresponding windows when buttons are clicked
     @FXML
     private void loadAddMember(ActionEvent actionEvent) {
@@ -174,7 +174,7 @@ public class MainController implements Initializable  {
         String id = bookIdInput.getText();
         String query = "SELECT * FROM \"addBook\" WHERE \"id\"='" + id + "'";
         ResultSet rs = databaseHandler.execQuery(query);
-        Boolean flag = false;
+        boolean flag = false;
 
         try {
             while (rs.next()) {
@@ -206,44 +206,39 @@ public class MainController implements Initializable  {
 
     @FXML
     private void loadBookInfo2(ActionEvent actionEvent) throws SQLException {
-
         issueData.clear();
 
         String bookID = this.bookID.getText();
         String memberID = this.memberID.getText();
         if (!bookID.isEmpty() && !memberID.isEmpty()) {
-            String qu = "SELECT * FROM \"issuedBooks\" WHERE \"bookID\" = '" + bookID + "' and \"memberID\"='" + memberID + "'";
-            ResultSet rs = databaseHandler.execQuery(qu);
+            String query = "SELECT ib.*, ab.title, ab.author, am.name, am.email " +
+                    "FROM \"issuedBooks\" ib " +
+                    "JOIN \"addBook\" ab ON ib.\"bookID\" = ab.\"id\" " +
+                    "JOIN \"addMember\" am ON ib.\"memberID\" = am.\"memberID\" " +
+                    "WHERE ib.\"bookID\" = '" + bookID + "' AND ib.\"memberID\" = '" + memberID + "'";
+            ResultSet rs = databaseHandler.execQuery(query);
 
             try {
                 if (!rs.next()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("ERROR");
                     alert.setHeaderText(null);
-                    alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with  ID: " + memberID + " !");
+                    alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with ID: " + memberID + " !");
                     alert.showAndWait();
                     clearOnSubmissionIssueEntries();
                     return;
                 } else {
-                    Timestamp mIssueTime = rs.getTimestamp("issueTime");
-                    String issueTime = mIssueTime.toString();
-                    int mRenewCount = rs.getInt("renew_count");
-
-                    String query = "SELECT * FROM \"addBook\" WHERE \"id\" = '" + bookID + "'";
-                    ResultSet r1 = databaseHandler.execQuery(query);
-
-                    String qu1 = "SELECT * FROM \"addMember\" WHERE \"memberID\" = '" + memberID + "'";
-                    ResultSet r2 = databaseHandler.execQuery(qu1);
-
-                    while (r1.next() && r2.next()) {
-                        String title = r1.getString("title");
-                        String author = r1.getString("author");
-                        String name = r2.getString("name");
-                        String email = r2.getString("email");
+                    do {
+                        Timestamp mIssueTime = rs.getTimestamp("issueTime");
+                        String issueTime = mIssueTime.toString();
+                        int mRenewCount = rs.getInt("renew_count");
+                        String title = rs.getString("title");
+                        String author = rs.getString("author");
+                        String name = rs.getString("name");
+                        String email = rs.getString("email");
 
                         issueData.add(new Issue(issueTime, mRenewCount, bookID, title, author, memberID, name, email));
-                    }
-
+                    } while (rs.next());
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -260,54 +255,6 @@ public class MainController implements Initializable  {
         }
     }
 
-//    private void loadBookInfo2(ActionEvent actionEvent) throws SQLException {
-//        issueData.clear();
-//
-//        String bookID = this.bookID.getText();
-//        String memberID = this.memberID.getText();
-//
-//        if (!bookID.isEmpty() && !memberID.isEmpty()) {
-//            String qu = "SELECT \"issuedBooks\".\"issueTime\", \"issuedBooks\".renew_count, \"addBook\".id, \"addBook\".title, \"addBook\".author, \"addMember\".\"memberID\", \"addMember\".name, \"addMember\".email" +
-//                    "FROM \"issuedBooks\"" +
-//                    "JOIN \"addBook\" ON \"issuedBooks\".\"bookID\" = \"addBook\".id" +
-//                    "JOIN \"addMember\" ON \"issuedBooks\".\"memberID\" = \"addMember\".\"memberID\"" +
-//                    "WHERE \"issuedBooks\".\"bookID\" = '" + bookID + " AND \"addMember\".\"memberID\" = '" + memberID + "'";
-//
-//            ResultSet rs = databaseHandler.execQuery(qu);
-//
-//            if (!rs.next()) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("ERROR");
-//                alert.setHeaderText(null);
-//                alert.setContentText("The book with ID: " + bookID + " wasn't issued to member with ID: " + memberID + " !");
-//                alert.showAndWait();
-//                clearOnSubmissionIssueEntries();
-//                return;
-//            }
-//
-//            do {
-//                Timestamp mIssueTime = rs.getTimestamp("issueTime");
-//                String issueTime = mIssueTime.toString();
-//                int mRenewCount = rs.getInt("renew_count");
-//                String title = rs.getString("title");
-//                String author = rs.getString("author");
-//                String name = rs.getString("name");
-//                String email = rs.getString("email");
-//
-//                issueData.add(new Issue(issueTime, mRenewCount, bookID, title, author, memberID, name, email));
-//            } while (rs.next());
-//
-//            isReadyForSubmission = true;
-//            tableView.setItems(issueData);
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("ERROR");
-//            alert.setHeaderText(null);
-//            alert.setContentText("You must select Book ID and Member ID to view the information!");
-//            alert.showAndWait();
-//            clearOnSubmissionIssueEntries();
-//        }
-//    }
 
     // A method to clear the book cache when we search for a book
     void clearBookCache() {

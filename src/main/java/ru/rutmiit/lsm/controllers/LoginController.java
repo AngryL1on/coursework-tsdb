@@ -23,13 +23,10 @@ public class LoginController {
 
     @FXML
     private Button cancelButton;
-
     @FXML
     private Label loginMessageLabel;
-
     @FXML
     private TextField usernameTextField;
-
     @FXML
     private PasswordField passwordPasswordField;
 

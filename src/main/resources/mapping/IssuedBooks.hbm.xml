@@ -1,0 +1,8 @@
+<hibernate-mapping>
+    <class name="ru.rutmiit.lsm.entities.IssuedBooks" table="issuedBooks">
+        <property column="BookID" name="bookID" type="java.lang.Integer"/>
+        <property column="MemberID" name="memberID" type="java.lang.Integer"/>
+        <property column="IssueTime" name="issueTime" type="java.lang.String"/>
+        <property column="renewCount" name="renewCount" type="java.lang.Integer"/>
+    </class>
+</hibernate-mapping>

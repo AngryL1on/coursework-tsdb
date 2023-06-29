@@ -13,8 +13,7 @@ import java.sql.*;
 public class DatabaseHandler {
     private static final String databaseName = "postgres";
     private static final String DB_URL = "jdbc:postgresql://localhost/" + databaseName;
-    // Variables used for connecting to the database and creating statements
-    // Change these values to your mySQL values
+
     private static DatabaseHandler handler = null;
     private static Connection conn = null;
     private static Statement stmt = null;
@@ -104,7 +103,6 @@ public class DatabaseHandler {
             System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
             return null;
         }
-
         return result;
     }
 
@@ -133,7 +131,6 @@ public class DatabaseHandler {
                 int count = rs.getInt(1);
                 data.add(new PieChart.Data("Total Books (" + count + ")", count));
             }
-
             ResultSet rs2 = execQuery(query2);
             if (rs2.next()) {
                 int count = rs2.getInt(1);

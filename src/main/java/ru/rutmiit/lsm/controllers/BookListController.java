@@ -209,8 +209,6 @@ public class BookListController implements Initializable {
         loadWindow("/ru/rutmiit/lsm/views/addBook.fxml", "Add Book");
     }
 
-
-
     void loadWindow(String loc, String title) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource(loc));

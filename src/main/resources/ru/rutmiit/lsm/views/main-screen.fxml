@@ -9,9 +9,9 @@
 <?import javafx.scene.text.*?>
 
 <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rutmiit.lsm.controllers.MainController">
-    <BorderPane prefHeight="565.0" prefWidth="778.0" styleClass="borderPane" stylesheets="@../resources/styles/Main-ScreenStyles.css">
+    <BorderPane prefHeight="565.0" prefWidth="778.0" styleClass="borderPane" stylesheets="@../styles/Main-ScreenStyles.css">
         <top>
-            <MenuBar prefHeight="37.0" prefWidth="700.0" styleClass="menuBar" stylesheets="@../resources/styles/Main-ScreenStyles.css" BorderPane.alignment="CENTER">
+            <MenuBar prefHeight="37.0" prefWidth="700.0" styleClass="menuBar" stylesheets="@../styles/Main-ScreenStyles.css" BorderPane.alignment="CENTER">
                 <Menu text="_File">
                     <accelerator>
                         <KeyCodeCombination alt="DOWN" code="F" control="UP" meta="UP" shift="UP" shortcut="UP" />
@@ -62,61 +62,56 @@
                         </accelerator>
                     </MenuItem>
                 </Menu>
-                <Menu text="_Help">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                    </accelerator>
-                </Menu>
             </MenuBar>
         </top>
         <right>
             <VBox prefHeight="556.0" prefWidth="139.0" BorderPane.alignment="CENTER">
-                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadAddMember" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Add Member">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadAddMember" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../styles/Main-ScreenStyles.css" text="Add Member">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../resources/images/add-member.png" />
+                            <Image url="@../images/add-member.png" />
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadAddBook" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Add Book ">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadAddBook" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../styles/Main-ScreenStyles.css" text="Add Book ">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../resources/images/add-book.png" />
+                            <Image url="@../images/add-book.png" />
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadViewMembers" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="View Members">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadViewMembers" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../styles/Main-ScreenStyles.css" text="View Members">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../resources/images/members-list.png" />
+                            <Image url="@../images/members-list.png" />
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadViewBooks" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="View Books">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadViewBooks" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../styles/Main-ScreenStyles.css" text="View Books">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../resources/images/view-books.png" />
+                            <Image url="@../images/view-books.png" />
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadViewIssuedBooks" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="View Issued Books ">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadViewIssuedBooks" prefHeight="130.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../styles/Main-ScreenStyles.css" text="View Issued Books ">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../resources/images/issued-books.png" />
+                            <Image url="@../images/issued-books.png" />
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" layoutX="10.0" layoutY="460.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="129.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Log Out">
+                <Button contentDisplay="TOP" layoutX="10.0" layoutY="460.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="129.0" prefWidth="139.0" styleClass="side-buttons" stylesheets="@../styles/Main-ScreenStyles.css" text="Log Out">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../resources/images/logout.png" />
+                            <Image url="@../images/logout.png" />
                         </ImageView>
                     </graphic>
                 </Button>
             </VBox>
         </right>
         <center>
-            <TabPane prefHeight="460.0" prefWidth="671.0" styleClass="tab" stylesheets="@../resources/styles/Main-ScreenStyles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane prefHeight="460.0" prefWidth="671.0" styleClass="tab" stylesheets="@../styles/Main-ScreenStyles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                 <Tab text="Issue Book">
                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                         <HBox alignment="CENTER" prefHeight="203.0" prefWidth="759.0" AnchorPane.bottomAnchor="303.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -125,7 +120,7 @@
                             </padding>
                             <VBox alignment="CENTER" prefHeight="163.0" prefWidth="270.0">
                                 <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../resources/images/search-book.png" />
+                                    <Image url="@../images/search-book.png" />
                                 </ImageView>
                                 <TextField fx:id="bookIdInput" alignment="CENTER" onAction="#loadBookInfo" prefHeight="40.0" prefWidth="238.0" promptText="Enter Book ID">
                                     <VBox.margin>
@@ -151,7 +146,7 @@
                             </padding>
                             <VBox alignment="CENTER" prefHeight="163.0" prefWidth="270.0">
                                 <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../resources/images/search-user.png" />
+                                    <Image url="@../images/search-user.png" />
                                 </ImageView>
                                 <TextField fx:id="memberIdInput" alignment="CENTER" onAction="#loadMemberInfo" prefHeight="40.0" prefWidth="149.0" promptText="Enter Member ID">
                                     <VBox.margin>
@@ -170,8 +165,8 @@
                                 </VBox>
                             </StackPane>
                         </HBox>
-                        <HBox alignment="CENTER" layoutY="411.0" prefHeight="95.0" prefWidth="759.0" styleClass="bottomHBOX" stylesheets="@../resources/styles/Main-ScreenStyles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="411.0">
-                            <Button mnemonicParsing="false" onAction="#issueHandler" prefHeight="37.0" prefWidth="136.0" styleClass="setup-button" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Issue">
+                        <HBox alignment="CENTER" layoutY="411.0" prefHeight="95.0" prefWidth="759.0" styleClass="bottomHBOX" stylesheets="@../styles/Main-ScreenStyles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="411.0">
+                            <Button mnemonicParsing="false" onAction="#issueHandler" prefHeight="37.0" prefWidth="136.0" styleClass="setup-button" stylesheets="@../styles/Main-ScreenStyles.css" text="Issue">
                                 <effect>
                                     <Glow />
                                 </effect>
@@ -179,7 +174,7 @@
                                     <Insets right="10.0" />
                                 </HBox.margin>
                             </Button>
-                            <Button layoutX="339.0" layoutY="39.0" mnemonicParsing="false" onAction="#refreshGraphs" prefHeight="37.0" prefWidth="142.0" styleClass="setup-button" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Refresh Graphs">
+                            <Button layoutX="339.0" layoutY="39.0" mnemonicParsing="false" onAction="#refreshGraphs" prefHeight="37.0" prefWidth="142.0" styleClass="setup-button" stylesheets="@../styles/Main-ScreenStyles.css" text="Refresh Graphs">
                                 <effect>
                                     <Glow />
                                 </effect>
@@ -198,7 +193,7 @@
                             </padding>
                             <VBox alignment="CENTER" prefHeight="163.0" prefWidth="270.0">
                                 <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../resources/images/search-book.png" />
+                                    <Image url="@../images/search-book.png" />
                                 </ImageView>
                                 <TextField fx:id="bookID" alignment="CENTER" prefHeight="40.0" prefWidth="238.0" promptText="Enter Book ID">
                                     <VBox.margin>
@@ -208,7 +203,7 @@
                             </VBox>
                             <VBox alignment="CENTER" prefHeight="163.0" prefWidth="270.0">
                                 <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../resources/images/search-user.png" />
+                                    <Image url="@../images/search-user.png" />
                                 </ImageView>
                                 <TextField fx:id="memberID" alignment="CENTER" prefHeight="40.0" prefWidth="149.0" promptText="Enter Member ID">
                                     <VBox.margin>
@@ -219,7 +214,7 @@
                         </HBox>
                         <HBox alignment="CENTER" layoutY="135.0" prefHeight="39.0" prefWidth="762.0">
                             <VBox>
-                                <Button mnemonicParsing="false" onAction="#loadBookInfo2" prefHeight="20.0" prefWidth="182.0" styleClass="setup-button" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="View Information">
+                                <Button mnemonicParsing="false" onAction="#loadBookInfo2" prefHeight="20.0" prefWidth="182.0" styleClass="setup-button" stylesheets="@../styles/Main-ScreenStyles.css" text="View Information">
                                     <effect>
                                         <Glow />
                                     </effect>
@@ -243,8 +238,8 @@
                                 </columnResizePolicy>
                             </TableView>
                         </HBox>
-                        <HBox alignment="CENTER" layoutY="411.0" prefHeight="99.0" prefWidth="759.0" styleClass="bottomHBOX" stylesheets="@../resources/styles/Main-ScreenStyles.css" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="411.0">
-                            <Button mnemonicParsing="false" onAction="#loadRenewOp" prefHeight="37.0" prefWidth="182.0" styleClass="setup-button" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Renew">
+                        <HBox alignment="CENTER" layoutY="411.0" prefHeight="99.0" prefWidth="759.0" styleClass="bottomHBOX" stylesheets="@../styles/Main-ScreenStyles.css" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="411.0">
+                            <Button mnemonicParsing="false" onAction="#loadRenewOp" prefHeight="37.0" prefWidth="182.0" styleClass="setup-button" stylesheets="@../styles/Main-ScreenStyles.css" text="Renew">
                                 <effect>
                                     <Glow />
                                 </effect>
@@ -252,7 +247,7 @@
                                     <Insets right="10.0" />
                                 </HBox.margin>
                             </Button>
-                            <Button layoutX="339.0" layoutY="39.0" mnemonicParsing="false" onAction="#loadOnSubmissionOp" prefHeight="37.0" prefWidth="186.0" styleClass="setup-button" stylesheets="@../resources/styles/Main-ScreenStyles.css" text="Submission ">
+                            <Button layoutX="339.0" layoutY="39.0" mnemonicParsing="false" onAction="#loadOnSubmissionOp" prefHeight="37.0" prefWidth="186.0" styleClass="setup-button" stylesheets="@../styles/Main-ScreenStyles.css" text="Submission ">
                                 <effect>
                                     <Glow />
                                 </effect>

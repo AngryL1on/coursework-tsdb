@@ -1,4 +1,4 @@
-CREATE DATABASE postgres;
+CREATE DATABASE LSM;
 USE postgres;
 
 CREATE TABLE "userAccount" (
@@ -11,8 +11,9 @@ CREATE TABLE "userAccount" (
 
 INSERT INTO "userAccount" ("firstName", "lastName", "userName", password)
 VALUES ('Vadim', 'Lushin', 'admin', '123456');
+VALUES ('Vadim', 'Lushin', 'admin2', '12345');
 
-CREATE TABLE "addBook" (
+CREATE TABLE "Books" (
                            "id" varchar(200) NOT NULL,
                            "title" varchar(200) NOT NULL,
                            "author" varchar(200) NOT NULL,
@@ -35,7 +36,7 @@ CREATE TABLE "issuedBooks" (
                                "bookID" varchar(200) NOT NULL,
                                "memberID" varchar(200) NOT NULL,
                                "issueTime" timestamp DEFAULT CURRENT_TIMESTAMP,
-                               "renew_count" integer DEFAULT 0,
+                               "renewCount" integer DEFAULT 0,
                                PRIMARY KEY ("bookID", "memberID"),
                                FOREIGN KEY ("bookID") REFERENCES "addBook" ("id"),
                                FOREIGN KEY ("memberID") REFERENCES "addMember" ("memberID")

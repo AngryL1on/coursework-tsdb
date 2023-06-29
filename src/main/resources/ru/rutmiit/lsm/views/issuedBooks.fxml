@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane fx:id="rootPane" prefHeight="490.0" prefWidth="622.0" styleClass="addMemberButton"
-            stylesheets="@../resources/styles/AddMember.css" xmlns="http://javafx.com/javafx/17.0.6"
+            stylesheets="@../styles/AddMember.css" xmlns="http://javafx.com/javafx/17.0.6"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rutmiit.lsm.controllers.IssuedBooksController">
     <TableView fx:id="tableView" layoutX="3.0" layoutY="1.0" prefHeight="490.0" prefWidth="622.0"
-               stylesheets="@../resources/styles/AddMember.css" AnchorPane.bottomAnchor="0.0"
+               stylesheets="@../styles/AddMember.css" AnchorPane.bottomAnchor="0.0"
                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
             <TableColumn fx:id="BookIDCol" prefWidth="75.0" text="Book-ID"/>
